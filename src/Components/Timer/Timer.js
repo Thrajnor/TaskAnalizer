@@ -15,34 +15,56 @@ const styles = StyleSheet.create({
     color: '#e57373',
     padding: 10
   },
+  on: {
+    backgroundColor: 'green',
+  },
+  off: {
+    backgroundColor: 'red',
+  },
   text: {
     fontSize: 25,
-    minWidth: 90
+    minWidth: 90,
+    fontFamily: 'Oxygen Mono'
   }
 });
 
 export default class Timer extends React.Component {
   state = {
     isOn: false,
-    time: '00:00',
+    formattedTime: '00:00',
     start: 0,
+    time: 0,
+    previousTime: 0,
+    current: 0
   };
+  componentDidUpdate = () => {
+    if (this.props.isMainOn === false && this.state.isOn === true) {
+      this.handleTimer()
+    }
+  }
 
   handleTimer() {
     if (this.state.isOn === true) {
+      if (this.props.isMainOnHandler) {
+        this.props.isMainOnHandler(false)
+      }
       this.setState({
         isOn: false,
-        time: '00:00',
-        start: 0,
+        previousTime: this.state.time
       });
       clearInterval(this.timer)
     } else {
+      if (this.props.isMainOnHandler) {
+        this.props.isMainOnHandler(true)
+      }
       this.setState({
         isOn: true,
-        start: Date.now()
+        start: Date.now() - this.state.time,
+        current: Date.now()
       })
       this.timer = setInterval(() => {
-        let seconds = Math.floor((Date.now() - this.state.start) / 100)
+        let current = Date.now() - this.state.current
+        let seconds = Math.floor((Date.now() - this.state.start) / 1000)
         let minutes = Math.floor(seconds / 60)
         if (minutes >= 1) {
           seconds = seconds - (60 * minutes)
@@ -57,9 +79,10 @@ export default class Timer extends React.Component {
         } else if (minutes < 10) {
           minutes = '0' + minutes
         }
-        let time = minutes + ':' + seconds
+        let formattedTime = minutes + ':' + seconds
         this.setState({
-          time: time
+          time: current + this.state.previousTime,
+          formattedTime: formattedTime
         })
       }, 10);
     }
@@ -67,10 +90,11 @@ export default class Timer extends React.Component {
   render() {
     return (
       <Button
-        style={styles.button}
-        id='button1'
-        onPress={() => this.handleTimer()}>
-        <Text style={styles.text}>{this.state.time.toString()}</Text>
+        style={[styles.button, this.state.isOn ? styles.on : styles.off]}
+        id='button'
+        onPress={this.props.isMainOn ? () => this.handleTimer() : null}>
+        <Text style={styles.text}>{this.props.id}</Text>
+        <Text style={styles.text}>{this.state.formattedTime.toString()}</Text>
       </Button>
     );
   }

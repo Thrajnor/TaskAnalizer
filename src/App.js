@@ -1,26 +1,46 @@
 import React from 'react';
 import Timer from 'src/Components/Timer/Timer.js'
-import { View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   View: {
-    flexDirection: 'row',
     backgroundColor: 'snow',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 10,
     flex: 1,
-    padding: 20
+    justifyContent: 'center',
+    flexDirection: 'column',
+    fontFamily: 'Ubuntu Mono'
+  },
+  row: {
+    margin: 15,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   }
 });
 
 export default class App extends React.Component {
+  state = {
+    isMainOn: false,
+  }
+
+  isMainOnHandler = (state) => {
+    this.setState({
+      isMainOn: state
+    })
+  }
+
   render() {
     return (
       <View style={
         styles.View
       }>
-        <Timer />
-        <Timer />
+        <Timer isMainOnHandler={this.isMainOnHandler} isMainOn={true} id='main' />
+        <View class='row' style={styles.row} >
+          <Timer isMainOn={this.state.isMainOn} id='1' />
+          <Timer isMainOn={this.state.isMainOn} id='2' />
+          <Timer isMainOn={this.state.isMainOn} id='3' />
+        </View>
       </View>
     );
   }
