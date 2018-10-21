@@ -1,5 +1,6 @@
 import React from 'react';
 import Timer from 'src/Components/Timer/Timer.js'
+// import Display from 'src/Components/Display/Display.js'
 import { Text, View, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -35,11 +36,21 @@ export default class App extends React.Component {
       <View style={
         styles.View
       }>
-        <Timer isMainOnHandler={this.isMainOnHandler} isMainOn={true} id='main' />
+        <Display isMainOnHandler={this.isMainOnHandler} isMainOn={this.state.isMainOn} main={true} id='main' />
         <View class='row' style={styles.row} >
           <Timer isMainOn={this.state.isMainOn} id='1' />
           <Timer isMainOn={this.state.isMainOn} id='2' />
           <Timer isMainOn={this.state.isMainOn} id='3' />
+        </View>
+        <View class='row' style={styles.row} >
+          <Timer isMainOn={this.state.isMainOn} id='4' />
+          <Timer isMainOn={this.state.isMainOn} id='5' />
+          <Timer isMainOn={this.state.isMainOn} id='6' />
+        </View>
+        <View class='row' style={styles.row} >
+          <Timer isMainOn={this.state.isMainOn} id='7' />
+          <Timer isMainOn={this.state.isMainOn} id='8' />
+          <Timer isMainOn={this.state.isMainOn} id='9' />
         </View>
       </View>
     );

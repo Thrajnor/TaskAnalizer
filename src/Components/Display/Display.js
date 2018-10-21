@@ -44,12 +44,18 @@ export default class Timer extends React.Component {
 
   handleTimer() {
     if (this.state.isOn) {
+      if (this.props.isMainOnHandler && this.props.main) {
+        this.props.isMainOnHandler(false)
+      }
       this.setState({
         isOn: false,
         previousTime: this.state.time
       });
       clearInterval(this.timer)
     } else {
+      if (this.props.isMainOnHandler && this.props.main) {
+        this.props.isMainOnHandler(true)
+      }
       this.setState({
         isOn: true,
         start: Date.now() - this.state.time,
@@ -85,7 +91,7 @@ export default class Timer extends React.Component {
       <Button
         style={[styles.button, this.state.isOn ? styles.on : styles.off]}
         id='button'
-        onPress={this.props.isMainOn ? () => this.handleTimer() : null}>
+        onPress={this.props.isMainOn || this.props.main ? () => this.handleTimer() : null}>
         <Text style={styles.text}>{this.props.id}</Text>
         <Text style={styles.number}>{this.state.formattedTime.toString()}</Text>
       </Button>
