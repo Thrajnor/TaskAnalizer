@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "navbar-native": "^1.6.1",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.3"
   },
