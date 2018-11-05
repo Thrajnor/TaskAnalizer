@@ -1,28 +1,32 @@
 import React from 'react';
 import Button from 'src/Components/Button/Button.js'
-import { Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  button: {
+  display: {
+    flex: 1,
+    marginTop: 50,
     borderWidth: 1,
     borderStyle: 'solid',
     borderRadius: 30,
-    minWidth: 110,
+    width: '100%',
+    height: '33%',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     borderColor: 'black',
     color: '#e57373',
-    padding: 10
-  },
-  on: {
-    backgroundColor: 'green',
+    padding: 30,
+    textAlign: 'justify'
   },
   off: {
-    backgroundColor: 'red',
+    backgroundColor: '#ffd6d6',
+  },
+  on: {
+    backgroundColor: '#d6ffef',
   },
   number: {
-    fontSize: 25,
-    minWidth: 90,
+    fontSize: 70,
     fontFamily: 'Oxygen Mono'
   }
 });
@@ -89,10 +93,10 @@ export default class Timer extends React.Component {
   render() {
     return (
       <Button
-        style={[styles.button, this.state.isOn ? styles.on : styles.off]}
+        style={[styles.display, this.state.isOn ? styles.on : styles.off]}
         id='button'
         onPress={this.props.isMainOn || this.props.main ? () => this.handleTimer() : null}>
-        <Text style={styles.text}>{this.props.id}</Text>
+        <Text style={styles.text}>{this.props.id} {"\n"}</Text>
         <Text style={styles.number}>{this.state.formattedTime.toString()}</Text>
       </Button>
     );
